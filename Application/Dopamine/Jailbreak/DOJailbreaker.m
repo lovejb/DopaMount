@@ -586,9 +586,20 @@ typedef NS_ENUM(NSInteger, JBErrorCode) {
 void fake_mount() // zqbb_flag
 {
 
+
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+        NSString *newPath = JBROOT_PATH(@"/mount");
+
+        if (![fileManager fileExistsAtPath:newPath]) {
+            [fileManager createDirectoryAtPath:newPath withIntermediateDirectories:YES attributes:nil error:nil];
+        }
+
+
 // BOOL mountEnabled = [[DOPreferenceManager sharedManager] boolPreferenceValueForKey:@"mountEnabled" fallback:YES];
 // if (mountEnabled) {
-NSString *filePath = @"/var/mobile/newFakePath.plist";
+NSString *filePath = JBROOT_PATH(@"/mount/mountPath.plist");//@"/var/mobile/newFakePath.plist";
 
 if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
     
