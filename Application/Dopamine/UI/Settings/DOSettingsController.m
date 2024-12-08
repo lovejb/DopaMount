@@ -586,7 +586,7 @@
         NSString *mountPath = inputTextField.text;
         
         if (mountPath.length > 1) {
-            NSString *plistFilePath = @"/var/mobile/newFakePath.plist";
+            NSString *plistFilePath = JBROOT_PATH(@"/mount/mountPath.plist");//@"/var/jb/mountPath.plist";
             NSMutableDictionary *plistDictionary = [NSMutableDictionary dictionaryWithContentsOfFile:plistFilePath];
             if (!plistDictionary) {
                 plistDictionary = [NSMutableDictionary dictionary];
@@ -618,7 +618,7 @@
 - (void)unmountPressed
 {
     // 读取plist文件中的路径数组
-    NSString *plistPath = @"/var/mobile/newFakePath.plist";
+    NSString *plistPath = JBROOT_PATH(@"/mount/mountPath.plist"); //@"/var/jb/mountPath.plist";
     NSMutableDictionary *plist = [NSMutableDictionary dictionaryWithContentsOfFile:plistPath];
     NSMutableArray *paths = [plist[@"path"] mutableCopy];
     
@@ -635,7 +635,7 @@
     
     for (NSString *path in paths) {
         UIAlertAction *pathAction = [UIAlertAction actionWithTitle:path style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            NSString *targetMountPath = [NSString stringWithFormat:@"%@%@", JBROOT_PATH(@"/mnt"), path];
+            NSString *targetMountPath = [NSString stringWithFormat:@"%@%@", JBROOT_PATH(@"/mount"), path];
             
             // 设置富文本标题
             NSMutableAttributedString *attrActionTitle = [[NSMutableAttributedString alloc] initWithString:path];
@@ -646,14 +646,7 @@
     
             // 设置富文本标题到UIAlertController
             [actionAlertController setValue:attrActionTitle forKey:@"attributedTitle"];
-    
-            // 删除路径的操作
-            UIAlertAction *deletePathAction = [UIAlertAction actionWithTitle:DOLocalizedString(@"Button_Delete_Path_Only") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-                // 删除plist中的对应路径并保存
-                [paths removeObject:path];
-                plist[@"path"] = paths;
-                [plist writeToFile:plistPath atomically:YES];
-            }];
+			
             
             // 删除路径并卸载的操作
             UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:DOLocalizedString(@"Button_Delete") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
@@ -681,7 +674,6 @@
 
             [actionAlertController addAction:deleteAction];
             [actionAlertController addAction:viewAction];
-            [actionAlertController addAction:deletePathAction]; // 添加仅删除路径的操作
             [actionAlertController addAction:cancelAction];
             
             [self presentViewController:actionAlertController animated:YES completion:nil];

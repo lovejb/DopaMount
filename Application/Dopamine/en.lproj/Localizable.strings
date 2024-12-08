@@ -115,10 +115,12 @@
 "Continue" = "Continue";
 
 // mount 
-"Input_Mmount_Title" = "Mount";
-"Input_Unmount_Title" = "Unmount";
-"Input_Mount_Title" = "input orig path";
-"Button_Mount" = "Set";
-
-"System_Uptime_Format" = "uptime: %ddays %dh %dm %ds";
 "Settings_Disable_Update" = "Disable Update";
+
+"Input_Mmount_Title" = "New Mount";
+"Input_Unmount_Title" = "List Mount";
+"Input_Mount_Title" = "input orig path";
+"Select_Mount_Title" = "Select Mount";
+"Button_Mount" = "Set";
+"Button_View"="Show in Filza";
+"Button_Delete"="UnMount";// Mount Button
