@@ -84,7 +84,7 @@
     int minutes = (uptimeInt / 60) % 60;
     int hours = (uptimeInt / 3600) % 24;
     long days = uptimeInt / 86400;
-    return [NSString stringWithFormat:NSLocalizedString(@"System_Uptime_Format", nil), days, hours, minutes, seconds];
+    return [NSString stringWithFormat:@"Uptime : %dD %d:%d:%d", days, hours, minutes, seconds];
 }
 
 @end

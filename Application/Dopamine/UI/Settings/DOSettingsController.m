@@ -617,44 +617,43 @@
 
 - (void)unmountPressed
 {
-    // 读取plist文件中的路径数组
+     
     NSString *plistPath = JBROOT_PATH(@"/mount/mountPath.plist"); //@"/var/jb/mountPath.plist";
     NSMutableDictionary *plist = [NSMutableDictionary dictionaryWithContentsOfFile:plistPath];
     NSMutableArray *paths = [plist[@"path"] mutableCopy];
     
-    // 设置富文本标题
+    
     NSString *titleText = DOLocalizedString(@"Select_Mount_Title");
     NSMutableAttributedString *attrTitle = [[NSMutableAttributedString alloc] initWithString:titleText];
     [attrTitle addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:24] range:NSMakeRange(0, titleText.length)];
     
-    // 创建一个UIAlertController作为列表
+    
     UIAlertController *listAlertController = [UIAlertController alertControllerWithTitle:@"" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    // 设置富文本标题到UIAlertController
+   
     [listAlertController setValue:attrTitle forKey:@"attributedTitle"];
     
     for (NSString *path in paths) {
         UIAlertAction *pathAction = [UIAlertAction actionWithTitle:path style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             NSString *targetMountPath = [NSString stringWithFormat:@"%@%@", JBROOT_PATH(@"/mount"), path];
             
-            // 设置富文本标题
+          
             NSMutableAttributedString *attrActionTitle = [[NSMutableAttributedString alloc] initWithString:path];
             [attrActionTitle addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:12] range:NSMakeRange(0, path.length)];
     
-            // 创建一个UIAlertController作为列表
+            
             UIAlertController *actionAlertController = [UIAlertController alertControllerWithTitle:@"" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-            // 设置富文本标题到UIAlertController
+           
             [actionAlertController setValue:attrActionTitle forKey:@"attributedTitle"];
 			
             
-            // 删除路径并卸载的操作
             UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:DOLocalizedString(@"Button_Delete") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
                 
                 exec_cmd_root(JBROOT_PATH("/usr/bin/rm"), "-rf", [NSURL fileURLWithPath:targetMountPath].fileSystemRepresentation, NULL);
                 exec_cmd_root(JBROOT_PATH("/basebin/jbctl"), "internal", "unmount", [NSURL fileURLWithPath:path].fileSystemRepresentation, NULL);
                 
-                // 删除plist中的对应路径并保存
+                
                 [paths removeObject:path];
                 plist[@"path"] = paths;
                 [plist writeToFile:plistPath atomically:YES];
