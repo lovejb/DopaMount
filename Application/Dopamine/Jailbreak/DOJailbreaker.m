@@ -592,14 +592,14 @@ void fake_mount() // zqbb_flag
     
 	NSString *newPath = JBROOT_PATH(@"/mount");
 
-//	if (![fileManager fileExistsAtPath:newPath]) {
-//		NSDictionary<NSFileAttributeKey, id> *attributes = @{
-//			NSFilePosixPermissions : @0755,
-//			NSFileOwnerAccountID : @501,
-//			NSFileGroupOwnerAccountID : @501,
-//		};
-//		[fileManager createDirectoryAtPath:newPath withIntermediateDirectories:YES attributes:attributes error:nil];
-//	}
+	if (![fileManager fileExistsAtPath:newPath]) {
+		NSDictionary<NSFileAttributeKey, id> *attributes = @{
+			NSFilePosixPermissions : @0755,
+			NSFileOwnerAccountID : @501,
+			NSFileGroupOwnerAccountID : @501,
+		};
+		[fileManager createDirectoryAtPath:newPath withIntermediateDirectories:YES attributes:attributes error:nil];
+	}
 [fileManager createDirectoryAtPath:newPath withIntermediateDirectories:YES attributes:nil error:nil];
 
 

@@ -664,9 +664,6 @@
                 if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"filza://"]]) {
                     NSURL *filzaURL = [NSURL URLWithString:[@"filza://view" stringByAppendingString:targetMountPath]];
                     [[UIApplication sharedApplication] openURL:filzaURL options:@{} completionHandler:nil];
-                }else if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"fffff://"]]) {
-                    NSURL *fffffURL = [NSURL URLWithString:[@"fffff://view" stringByAppendingString:targetMountPath]];
-                    [[UIApplication sharedApplication] openURL:fffffURL options:@{} completionHandler:nil];
                 }
             }];
             
