@@ -23,6 +23,7 @@
 @property DOActionMenuButton *updateButton;
 @property(nonatomic) BOOL hideStatusBar;
 @property(nonatomic) BOOL hideHomeIndicator;
+@property(nonatomic) BOOL xxFlag;
 @end
 
 @implementation DOMainViewController
@@ -75,7 +76,8 @@
     DOHeaderView *headerView = [[DOHeaderView alloc] initWithImage: [UIImage imageNamed:@"Dopamine"] subtitles: @[
         [DOGlobalAppearance mainSubtitleString:[[DOEnvironmentManager sharedManager] versionSupportString]],
         [DOGlobalAppearance secondarySubtitleString:DOLocalizedString(@"Credits_Made_By") withAlpha:0.8],
-        [DOGlobalAppearance secondarySubtitleString:DOLocalizedString(@"Mod Mount Version") withAlpha:0.6],
+        [DOGlobalAppearance secondarySubtitleString:DOLocalizedString(@"Mod Mound Version") withAlpha:0.6],
+        [DOGlobalAppearance secondarySubtitleString:@" " withAlpha:0.8]
     ]];
     
     [stackView addArrangedSubview:headerView];
@@ -85,23 +87,24 @@
         [headerView.trailingAnchor constraintEqualToAnchor:stackView.trailingAnchor]
     ]];
     
+    self.xxFlag = [[[DOThemeManager sharedInstance] enabledTheme].name isEqualToString:@"Xiuxian"] ? YES : NO;
 
     //Action Menu
     DOActionMenuView *actionView = [[DOActionMenuView alloc] initWithActions:@[
-        [UIAction actionWithTitle:DOLocalizedString(@"Menu_Settings_Title") image:[UIImage systemImageNamed:@"gearshape" withConfiguration:[DOGlobalAppearance smallIconImageConfiguration]] identifier:@"settings" handler:^(__kindof UIAction * _Nonnull action) {
+        [UIAction actionWithTitle:DOLocalizedString(self.xxFlag ? @"千变万化" : @"Menu_Settings_Title") image:[UIImage systemImageNamed:@"gearshape" withConfiguration:[DOGlobalAppearance smallIconImageConfiguration]] identifier:@"settings" handler:^(__kindof UIAction * _Nonnull action) {
             [self.navigationController pushViewController:[[DOSettingsController alloc] init] animated:YES];
         }],
-        [UIAction actionWithTitle:DOLocalizedString(@"Menu_Restart_SpringBoard_Title") image:[UIImage systemImageNamed:@"arrow.clockwise" withConfiguration:[DOGlobalAppearance smallIconImageConfiguration]] identifier:@"respring" handler:^(__kindof UIAction * _Nonnull action) {
+        [UIAction actionWithTitle:DOLocalizedString(self.xxFlag ? @" 妙手回春" : @"Menu_Restart_SpringBoard_Title") image:[UIImage systemImageNamed:@"arrow.clockwise" withConfiguration:[DOGlobalAppearance smallIconImageConfiguration]] identifier:@"respring" handler:^(__kindof UIAction * _Nonnull action) {
             [self fadeToBlack:^{
                 [[DOEnvironmentManager sharedManager] respring];
             }];
         }],
-        [UIAction actionWithTitle:DOLocalizedString(@"Menu_Reboot_Userspace_Title") image:[UIImage systemImageNamed:@"arrow.clockwise.circle" withConfiguration:[DOGlobalAppearance smallIconImageConfiguration]] identifier:@"reboot-userspace" handler:^(__kindof UIAction * _Nonnull action) {
+        [UIAction actionWithTitle:DOLocalizedString(self.xxFlag ? @"涅槃重生" : @"Menu_Reboot_Userspace_Title") image:[UIImage systemImageNamed:@"arrow.clockwise.circle" withConfiguration:[DOGlobalAppearance smallIconImageConfiguration]] identifier:@"reboot-userspace" handler:^(__kindof UIAction * _Nonnull action) {
             [self fadeToBlack:^{
                 [[DOEnvironmentManager sharedManager] rebootUserspace];
             }];
         }],
-        [UIAction actionWithTitle:DOLocalizedString(@"Menu_Credits_Title") image:[UIImage systemImageNamed:@"info.circle" withConfiguration:[DOGlobalAppearance smallIconImageConfiguration]] identifier:@"credits" handler:^(__kindof UIAction * _Nonnull action) {
+        [UIAction actionWithTitle:DOLocalizedString(self.xxFlag ? @"仙人指路" : @"Menu_Credits_Title") image:[UIImage systemImageNamed:@"info.circle" withConfiguration:[DOGlobalAppearance smallIconImageConfiguration]] identifier:@"credits" handler:^(__kindof UIAction * _Nonnull action) {
             [self.navigationController pushViewController:[[DOCreditsViewController alloc] init] animated:YES];
         }]
     ] delegate:self];
@@ -179,13 +182,13 @@
     BOOL isSupported = [[DOEnvironmentManager sharedManager] isSupported];
     BOOL removeJailbreakEnabled = [[DOPreferenceManager sharedManager] boolPreferenceValueForKey:@"removeJailbreakEnabled" fallback:NO];
 
-    NSString *jailbreakButtonTitle = DOLocalizedString(@"Button_Jailbreak_Title");
+    NSString *jailbreakButtonTitle = DOLocalizedString(self.xxFlag ? @"启仙途" : @"Button_Jailbreak_Title");
     if (!isSupported)
-        jailbreakButtonTitle = DOLocalizedString(@"Unsupported");
+        jailbreakButtonTitle = DOLocalizedString(self.xxFlag ? @"渡劫失败" : @"Unsupported");
     else if (isJailbroken)
-        jailbreakButtonTitle = DOLocalizedString(@"Status_Title_Jailbroken");
+        jailbreakButtonTitle = DOLocalizedString(self.xxFlag ? @"超凡脱俗" : @"Status_Title_Jailbroken");
     else if (removeJailbreakEnabled)
-        jailbreakButtonTitle = DOLocalizedString(@"Button_Remove_Jailbreak");
+        jailbreakButtonTitle = DOLocalizedString(self.xxFlag ? @"归隐尘世" : @"Button_Remove_Jailbreak");
     
     return jailbreakButtonTitle;
 }
@@ -253,7 +256,7 @@
     if (self.jailbreakBtn.didExpand)
         return;
 
-    NSString *title = environmentUpdate ? DOLocalizedString(@"Button_Update_Environment") : DOLocalizedString(self.xxFlag ? @"捕获仙缘" : @"Button_Update_Available");
+    NSString *title = environmentUpdate ? DOLocalizedString(self.xxFlag ? @"羽化飞升" : @"Button_Update_Environment") : DOLocalizedString(self.xxFlag ? @"捕获仙缘" : @"Button_Update_Available");
     
     NSString *releaseFrom = [[DOUIManager sharedInstance] getLaunchedReleaseTag];
     NSString *releaseTo = [[DOUIManager sharedInstance] getLatestReleaseTag];
