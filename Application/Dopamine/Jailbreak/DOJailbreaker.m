@@ -590,33 +590,32 @@ void fake_mount() // zqbb_flag
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
-	NSString *newPath = JBROOT_PATH(@"/mount");
+        NSString *newPath = JBROOT_PATH(@"/mount");
 
-	if (![fileManager fileExistsAtPath:newPath]) {
-//		NSDictionary<NSFileAttributeKey, id> *attributes = @{
-//			NSFilePosixPermissions : @0755,
-//			NSFileOwnerAccountID : @501,
-//			NSFileGroupOwnerAccountID : @501,
-//		};
-		[fileManager createDirectoryAtPath:newPath withIntermediateDirectories:YES attributes:nil error:nil];
-	}
+        if (![fileManager fileExistsAtPath:newPath]) {
+            [fileManager createDirectoryAtPath:newPath withIntermediateDirectories:YES attributes:nil error:nil];
+        }
 
 
+// BOOL mountEnabled = [[DOPreferenceManager sharedManager] boolPreferenceValueForKey:@"mountEnabled" fallback:YES];
+// if (mountEnabled) {
+NSString *filePath = JBROOT_PATH(@"/mount/mountPath.plist");//@"/var/mobile/newFakePath.plist";
 
-	NSString *filePath = JBROOT_PATH(@"/mount/mountPath.plist");//@"/var/mobile/newFakePath.plist";
+if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+    
+    NSDictionary *decodedDict = [NSDictionary dictionaryWithContentsOfFile:filePath];
 
-	if ([fileManager fileExistsAtPath:filePath]) {
-		
-		NSDictionary *decodedDict = [NSDictionary dictionaryWithContentsOfFile:filePath];
+    if (decodedDict && [decodedDict[@"path"] isKindOfClass:[NSArray class]]) {
+        NSArray *paths = decodedDict[@"path"];
+        for (NSString *path in paths) {
+            exec_cmd(JBROOT_PATH("/basebin/jbctl"), "internal", "mount", [NSURL fileURLWithPath:path].fileSystemRepresentation, NULL);
+        }
+    }
+}
 
-		if (decodedDict && [decodedDict[@"path"] isKindOfClass:[NSArray class]]) {
-			NSArray *paths = decodedDict[@"path"];
-			for (NSString *path in paths) {
-				exec_cmd(JBROOT_PATH("/basebin/jbctl"), "internal", "mount", [NSURL fileURLWithPath:path].fileSystemRepresentation, NULL);
-			}
-		}
-	}
 
+
+// }
     
 }
 
