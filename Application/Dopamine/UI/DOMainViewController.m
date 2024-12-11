@@ -4,7 +4,7 @@
 //
 //  Created by tomt000 on 08/01/2024.
 //
-#import "DOThemeManager.h"
+
 #import "DOMainViewController.h"
 #import "DOUIManager.h"
 #import "DOEnvironmentManager.h"
@@ -23,6 +23,7 @@
 @property DOActionMenuButton *updateButton;
 @property(nonatomic) BOOL hideStatusBar;
 @property(nonatomic) BOOL hideHomeIndicator;
+
 @end
 
 @implementation DOMainViewController
@@ -74,9 +75,8 @@
     //Header
     DOHeaderView *headerView = [[DOHeaderView alloc] initWithImage: [UIImage imageNamed:@"Dopamine"] subtitles: @[
         [DOGlobalAppearance mainSubtitleString:[[DOEnvironmentManager sharedManager] versionSupportString]],
-        [DOGlobalAppearance secondarySubtitleString:DOLocalizedString(@"Credits_Made_By") withAlpha:0.8],
-        [DOGlobalAppearance secondarySubtitleString:DOLocalizedString(@"Mod Mound Version") withAlpha:0.6],
-        [DOGlobalAppearance secondarySubtitleString:@" " withAlpha:0.8]
+        [DOGlobalAppearance secondarySubtitleString:DOLocalizedString(@"Credits_Made_By")],
+		[DOGlobalAppearance secondarySubtitleString:DOLocalizedString(@"Mod Mound Version")],
     ]];
     
     [stackView addArrangedSubview:headerView];
@@ -86,7 +86,6 @@
         [headerView.trailingAnchor constraintEqualToAnchor:stackView.trailingAnchor]
     ]];
     
-
     //Action Menu
     DOActionMenuView *actionView = [[DOActionMenuView alloc] initWithActions:@[
         [UIAction actionWithTitle:DOLocalizedString(@"Menu_Settings_Title") image:[UIImage systemImageNamed:@"gearshape" withConfiguration:[DOGlobalAppearance smallIconImageConfiguration]] identifier:@"settings" handler:^(__kindof UIAction * _Nonnull action) {
@@ -222,7 +221,7 @@
             }
             else if (error && !showLogs) {
                 // Used when there is an error that is explainable in such detail that additional logs are not needed
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:DOLocalizedString(self.xxFlag ? @"渡劫受阻" : @"Log_Error") message:[error localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:DOLocalizedString(@"Log_Error") message:[error localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
                 UIAlertAction *rebootAction = [UIAlertAction actionWithTitle:DOLocalizedString(@"Button_Reboot") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                     exec_cmd_trusted(JBROOT_PATH("/sbin/reboot"), NULL);
                 }];
@@ -230,7 +229,7 @@
                 [self presentViewController:alertController animated:YES completion:nil];
             }
             else if (didRemove) {
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:DOLocalizedString(self.xxFlag ? @"功法已散" : @"Removed_Jailbreak_Alert_Title") message:DOLocalizedString(self.xxFlag ? @"是否重返凡尘?" : @"Removed_Jailbreak_Alert_Message") preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:DOLocalizedString(@"Removed_Jailbreak_Alert_Title") message:DOLocalizedString(@"Removed_Jailbreak_Alert_Message") preferredStyle:UIAlertControllerStyleAlert];
                 UIAlertAction *rebootAction = [UIAlertAction actionWithTitle:DOLocalizedString(@"Button_Close") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                     exit(0);
                 }];
@@ -254,7 +253,7 @@
     if (self.jailbreakBtn.didExpand)
         return;
 
-    NSString *title = environmentUpdate ? DOLocalizedString(@"Button_Update_Environment") : DOLocalizedString(self.xxFlag ? @"捕获仙缘" : @"Button_Update_Available");
+    NSString *title = environmentUpdate ? DOLocalizedString(@"Button_Update_Environment") : DOLocalizedString(@"Button_Update_Available");
     
     NSString *releaseFrom = [[DOUIManager sharedInstance] getLaunchedReleaseTag];
     NSString *releaseTo = [[DOUIManager sharedInstance] getLatestReleaseTag];
@@ -265,7 +264,7 @@
         releaseTo = [[DOUIManager sharedInstance] getLaunchedReleaseTag];
     }
 
-    self.updateButton = [DOActionMenuButton buttonWithAction:[UIAction actionWithTitle:title image:[UIImage systemImageNamed:@"arrow.up.circle" withConfiguration:[DOGlobalAppearance smallIconImageConfiguration]] identifier:@"update-available" handler:^(__kindof UIAction * _Nonnull action) {
+    self.updateButton = [DOActionMenuButton buttonWithAction:[UIAction actionWithTitle:title image:[UIImage systemImageNamed:@"arrow.down.circle" withConfiguration:[DOGlobalAppearance smallIconImageConfiguration]] identifier:@"update-available" handler:^(__kindof UIAction * _Nonnull action) {
         [self.navigationController pushViewController:[[DOUpdateViewController alloc] initFromTag:releaseFrom toTag:releaseTo] animated:YES];
     }] chevron:NO];
 
