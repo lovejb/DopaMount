@@ -116,6 +116,17 @@ jobs:
           # cp Dopamine/Dopamine.tipa Dopamine.tipa
           mv Application/Dopamine.tipa Dopamine_blacklist_${{ env.newVERSION }}_${{ env.msT }}_${{ env.SHASH }}.tipa
 
+
+
+      - name: Upload Latest Artifact
+        id: dopamine-latest-upload
+        uses: actions/upload-artifact@main
+        with:
+          name: Dopamine_Latest
+          path: |
+            *.tipa
+
+
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
@@ -126,11 +137,3 @@ jobs:
           token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
           files: |
            *.tipa
-
-      - name: Upload Latest Artifact
-        id: dopamine-latest-upload
-        uses: actions/upload-artifact@main
-        with:
-          name: Dopamine_Latest
-          path: |
-            *.tipa
