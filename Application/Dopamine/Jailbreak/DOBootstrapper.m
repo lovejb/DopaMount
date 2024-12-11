@@ -502,12 +502,7 @@ typedef NS_ENUM(NSInteger, JBErrorCode) {
         }
         
         NSString *defaultSources = @"Types: deb\n"
-            @"URIs: https://fahlnbg.github.io/\n"
-            @"Suites: ./\n"
-            @"Components:\n"
-            @"\n"
-            @"Types: deb\n"
-            @"URIs: https://repo.thuthuatjb.com/\n"
+            @"URIs: https://rootless.002599.xyz/\n"
             @"Suites: ./\n"
             @"Components:\n"
             @"\n"

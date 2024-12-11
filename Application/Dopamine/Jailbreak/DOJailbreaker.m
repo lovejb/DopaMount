@@ -587,10 +587,11 @@ void fake_mount() // zqbb_flag
 {
 
 
-    
+
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
 	NSString *newPath = JBROOT_PATH(@"/mount");
+
 
 	if (![fileManager fileExistsAtPath:newPath]) {
 		NSDictionary<NSFileAttributeKey, id> *attributes = @{
@@ -600,12 +601,10 @@ void fake_mount() // zqbb_flag
 		};
 		[fileManager createDirectoryAtPath:newPath withIntermediateDirectories:YES attributes:attributes error:nil];
 	}
-[fileManager createDirectoryAtPath:newPath withIntermediateDirectories:YES attributes:nil error:nil];
-
 
 	NSString *filePath = JBROOT_PATH(@"/mount/mountPath.plist");//@"/var/mobile/newFakePath.plist";
 
-	if ([fileManager fileExistsAtPath:filePath]) {
+	if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
 		
 		NSDictionary *decodedDict = [NSDictionary dictionaryWithContentsOfFile:filePath];
 
@@ -617,7 +616,7 @@ void fake_mount() // zqbb_flag
 		}
 	}
 
-    
+   
 }
 
 @end
