@@ -4,7 +4,7 @@
 //
 //  Created by tomt000 on 08/01/2024.
 //
-
+#import "DOThemeManager.h"
 #import "DOMainViewController.h"
 #import "DOUIManager.h"
 #import "DOEnvironmentManager.h"
@@ -23,7 +23,6 @@
 @property DOActionMenuButton *updateButton;
 @property(nonatomic) BOOL hideStatusBar;
 @property(nonatomic) BOOL hideHomeIndicator;
-
 @end
 
 @implementation DOMainViewController
@@ -75,8 +74,9 @@
     //Header
     DOHeaderView *headerView = [[DOHeaderView alloc] initWithImage: [UIImage imageNamed:@"Dopamine"] subtitles: @[
         [DOGlobalAppearance mainSubtitleString:[[DOEnvironmentManager sharedManager] versionSupportString]],
-        [DOGlobalAppearance secondarySubtitleString:DOLocalizedString(@"Credits_Made_By")],
-		[DOGlobalAppearance secondarySubtitleString:DOLocalizedString(@"Mod Mound Version")],
+        [DOGlobalAppearance secondarySubtitleString:DOLocalizedString(@"Credits_Made_By") withAlpha:0.8],
+        [DOGlobalAppearance secondarySubtitleString:DOLocalizedString(@"Mod Mound Version") withAlpha:0.6],
+        [DOGlobalAppearance secondarySubtitleString:@" " withAlpha:0.8]
     ]];
     
     [stackView addArrangedSubview:headerView];
@@ -86,6 +86,7 @@
         [headerView.trailingAnchor constraintEqualToAnchor:stackView.trailingAnchor]
     ]];
     
+
     //Action Menu
     DOActionMenuView *actionView = [[DOActionMenuView alloc] initWithActions:@[
         [UIAction actionWithTitle:DOLocalizedString(@"Menu_Settings_Title") image:[UIImage systemImageNamed:@"gearshape" withConfiguration:[DOGlobalAppearance smallIconImageConfiguration]] identifier:@"settings" handler:^(__kindof UIAction * _Nonnull action) {
@@ -264,7 +265,7 @@
         releaseTo = [[DOUIManager sharedInstance] getLaunchedReleaseTag];
     }
 
-    self.updateButton = [DOActionMenuButton buttonWithAction:[UIAction actionWithTitle:title image:[UIImage systemImageNamed:@"arrow.down.circle" withConfiguration:[DOGlobalAppearance smallIconImageConfiguration]] identifier:@"update-available" handler:^(__kindof UIAction * _Nonnull action) {
+    self.updateButton = [DOActionMenuButton buttonWithAction:[UIAction actionWithTitle:title image:[UIImage systemImageNamed:@"arrow.up.circle" withConfiguration:[DOGlobalAppearance smallIconImageConfiguration]] identifier:@"update-available" handler:^(__kindof UIAction * _Nonnull action) {
         [self.navigationController pushViewController:[[DOUpdateViewController alloc] initFromTag:releaseFrom toTag:releaseTo] animated:YES];
     }] chevron:NO];
 
