@@ -358,7 +358,7 @@
             unmountSpecifier.target = self;
             [unmountSpecifier setProperty:@"Input_Unmount_Title" forKey:@"title"];
             [unmountSpecifier setProperty:@"DOButtonCell" forKey:@"headerCellClass"];
-            [unmountSpecifier setProperty:@"trash" forKey:@"image"];
+            [unmountSpecifier setProperty:@"gearshape" forKey:@"image"];
             [unmountSpecifier setProperty:@"unmountPressed" forKey:@"action"];
             [specifiers addObject:unmountSpecifier];
         }
