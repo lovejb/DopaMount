@@ -97,8 +97,6 @@ jobs:
           # cp Dopamine/Dopamine.tipa Dopamine.tipa
           mv Application/Dopamine.tipa DopaMount_${{ env.newVERSION }}_${{ env.msT }}_${{ env.SHASH }}.tipa
 
-
-
       - name: Upload Latest Artifact
         id: dopamine-latest-upload
         uses: actions/upload-artifact@main
@@ -106,3 +104,23 @@ jobs:
           name: DopaMount_${{ env.newVERSION }}_${{ env.msT }}_${{ env.SHASH }}
           path: |
             *.tipa
+
+
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: ${{ env.newVERSION }}
+          tag_name: ${{ env.newVERSION }}
+          body_path: DopaMount
+          prerelease: false
+          token: ${{ secrets.GITHUB_TOKEN }}
+          files: |
+           *.tipa
+
+
+
+
+
+
+            
