@@ -116,6 +116,7 @@
 
 // Mount Button
 "Settings_Disable_Update" = "Vô hiệu hóa cập nhật";
+"Mod Mount Version"="Phiên bản Mount";
 
 "Input_Mmount_Title" = "Tạo Mount mới";
 "Input_Unmount_Title" = "Danh sách Mount";
@@ -124,3 +125,5 @@
 "Button_Mount" = "Áp dụng";
 "Button_View"="Hiển thị trong Filza";
 "Button_Delete"="Hủy Mount";
+
+"System_Uptime_Format" = "Uptime: %dngày %d:%d:%d";

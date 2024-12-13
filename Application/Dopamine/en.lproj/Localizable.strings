@@ -124,3 +124,5 @@
 "Button_Mount" = "Set";
 "Button_View"="Show in Filza";
 "Button_Delete"="UnMount";// Mount Button
+
+"System_Uptime_Format" = "Uptime: %dd %dh %dm %ds";

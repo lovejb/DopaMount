@@ -361,19 +361,19 @@
             [unmountSpecifier setProperty:@"gearshape" forKey:@"image"];
             [unmountSpecifier setProperty:@"unmountPressed" forKey:@"action"];
             [specifiers addObject:unmountSpecifier];
-        }
+			
 
-        PSSpecifier *spaceGroupSpecifier = [PSSpecifier emptyGroupSpecifier];
-        [specifiers addObject:spaceGroupSpecifier];
-        
-	    PSSpecifier *rebootSpecifier = [PSSpecifier emptyGroupSpecifier];
-	    rebootSpecifier.target = self;
-	    [rebootSpecifier setProperty:@"Button_Reboot" forKey:@"title"];
-	    [rebootSpecifier setProperty:@"DOButtonCell" forKey:@"headerCellClass"];
-	    [rebootSpecifier setProperty:@"arrow.triangle.2.circlepath" forKey:@"image"];
-	    [rebootSpecifier setProperty:@"rebootPressed" forKey:@"action"];
-	    [specifiers addObject:rebootSpecifier];
-        
+			PSSpecifier *spaceGroupSpecifier = [PSSpecifier emptyGroupSpecifier];
+			[specifiers addObject:spaceGroupSpecifier];
+			
+			PSSpecifier *rebootSpecifier = [PSSpecifier emptyGroupSpecifier];
+			rebootSpecifier.target = self;
+			[rebootSpecifier setProperty:@"Button_Reboot" forKey:@"title"];
+			[rebootSpecifier setProperty:@"DOButtonCell" forKey:@"headerCellClass"];
+			[rebootSpecifier setProperty:@"arrow.triangle.2.circlepath" forKey:@"image"];
+			[rebootSpecifier setProperty:@"rebootPressed" forKey:@"action"];
+			[specifiers addObject:rebootSpecifier];
+        }
 
         _specifiers = specifiers;
     }
